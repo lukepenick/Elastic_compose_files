@@ -8,3 +8,5 @@ Also on the left side of the : in the volumes section and the ports section are 
 You will need to make or change the directories on the left and make sure the files are there that need to be.
 
 If you need help or have questions let me know.
+The stable folder is the logstash config files.
+
