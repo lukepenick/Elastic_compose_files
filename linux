@@ -1,0 +1,89 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=logstash
+      - cluster.initial_master_nodes=elasticsearch
+      - ulimitmemlock=1:-1
+      - ulimitnproc=4096
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - data01
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elastic
+
+  kib01:
+    image: docker.elastic.co/kibana/kibana:7.6.0
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    volumes:
+      - /etc/kibana/:/etc/kibana/:ro
+    networks:
+      - elastic
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.6.0
+    container_name: logstash
+    links:
+    - elasticsearch
+    ports:
+      - 5044:5044
+      - 6050:6050
+      - 6051:6051
+      - 6052:6052
+      - 6053:6053
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    volumes:
+      - /etc/logstash/logstash/jvm.options:/usr/share/logstash/config/jvm.options:ro
+      - /etc/logstash/logstash/log4jz.properties:/usr/share/logstash/config/log4jz.properties:ro
+      - /etc/logstash/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - /etc/logstash/logstash/logstash-ossec-template.json:/logstash-ossec-template.json:ro
+      - /etc/logstash/logstash/logstash-template.json:/logstash-template.json:ro
+      - /etc/logstash/logstash/beats-template.json:/beats-template.json:ro
+      - /etc/logstash/logstash/conf.d:/usr/share/logstash/pipeline/:ro
+      - /etc/logstash/logstash/conf.d.available/:/usr/share/logstash/conf.d.available/:ro
+      - /etc/nsm/rules:/etc/nsm/rules:ro
+      - /lib/dictionaries:/lib/dictionaries:ro
+      - /var/log/logstash:/var/log/logstash:ro
+      - /var/log/nsm/securityonion:/var/log/nsm/securityonion:ro
+    depends_on:
+    - elasticsearch
+    networks:
+      - elastic
+  
+  ElastAlert:
+    image: bitsensor/elastalert:latest
+    container_name: elastalert
+    ports:
+      - 3030:3030
+      - 3333:3333
+    volumes:
+      - /etc/elastic/elastalert.yaml:/opt/elastalert/config.yaml:ro
+      - /etc/elastic/config.dev.json:/opt/elastalert-server/config/config.dev.json:ro
+      - /etc/elastic/rules:/opt/elastalert/rules:ro
+      - /etc/elastic/rule_templates:/opt/elastalert/rule_templates:ro
+    links:
+    - elasticsearch
+    networks:
+      - elastic
+
+volumes:
+  data01:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge
