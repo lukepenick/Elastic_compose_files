@@ -1,4 +1,4 @@
-# Elastic_compose_files
+# Portable SIEM config files
 Elastic docker compose files as well as files for configs
 3/16/20- Added Wazuh manager
 
