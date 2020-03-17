@@ -8,3 +8,5 @@ elasticsearch.url: http://elasticsearch:9200
 #elasticsearch.password: changeme
 #xpack.monitoring.ui.container.elasticsearch.enabled: true
 logging.dest: /var/log/kibana/kibana.log
+#for the key just use a 32 character string.
+xpack.encryptedSavedObjects.encryptionKey: '7C4XwGX2dqv_F7"Uj9R9^?6"d,y4V>wE'
