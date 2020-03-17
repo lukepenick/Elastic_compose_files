@@ -10,12 +10,20 @@ You will need to make or change the directories on the left and make sure the fi
 
 You will need to download the beats (7.6.1) and run the following in the directory of the beats: (ex:packetbeat)
 
+
+
+
+
 \install-service-packetbeat.ps1
 
 .\packetbeat.exe setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["localhost:9200"]'
 (this tells it for this one time run without logstash to connect to elastic and load indexes on the ip and port of elastic server.)
 
 Start-Service packetbeat
+
+
+
+Also no need to put the wazuh client on the hosts in this version. It give a powershell or bash script to authenticate the user automagically!!
 
 If you need help or have questions let me know.
 The stable folder is the logstash config files.
