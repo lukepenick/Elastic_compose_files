@@ -1,4 +1,5 @@
 # Portable SIEM config files
+# To be able to copy and paste correctly look at this in raw form
 Elastic docker compose files as well as files for configs
 4/11/20- Full TLS/SSL between nodes RBA (role based authentication) 
 
