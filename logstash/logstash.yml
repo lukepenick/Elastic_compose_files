@@ -221,3 +221,5 @@ path.logs: /var/log/logstash
 # However, it is not considered stable until version 6.6.
 # If you enable this, make sure to enable the -Xss setting in jvm.options as well.
 pipeline.java_execution: true
+xpack.monitoring.elasticsearch.username: logstash_system
+xpack.monitoring.elasticsearch.password: ctbPMnp38y3Tu48wm4E5
