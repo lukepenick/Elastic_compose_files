@@ -128,4 +128,7 @@ Start the Wazuh.msi
 OTHERNOTES:
 Only use logstash is the event elastic doesnt support logs from whatever you are trying to get, it will cause you not to get IPs and whatnot of hosts you are sending through it.
 
+If you want more logstash info please visit:
+https://www.elastic.co/guide/en/logstash/7.6/ls-security.html
+
 Enjoy! If you have any contributions or to report issues please let me know!
