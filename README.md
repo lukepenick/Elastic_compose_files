@@ -9,20 +9,7 @@ Elastic docker compose files as well as files for configs
  
  Inside that folder decompress the certs:
  https://drive.google.com/file/d/1eVlAvR-RLv-jWLmbxeanxtCeiPuT9yPg/view?usp=sharing
- Inside the certs folder drop the files as follows
-	-certs(folder)
-	  -ca (folder)
-	     -ca.crt
-	  -es01 (folder)
-         -es01.crt	
-         -es01.key
-	  -kib01 (folder)
-         -kib01.crt
-         -kib01.key
-      -wazuh (folder)
-         -wazuh.crt
-         -wazuh.key	
-        
+ 
 If you want your own certs download elasticsearch 7.6.2 
 Decompress the folder
 Open a powershell window and navigate to the folder. 
