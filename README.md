@@ -95,5 +95,10 @@ Only use logstash is the event elastic doesnt support logs from whatever you are
 If you want logstash to run please visit and follow the steps to add it:
 https://www.elastic.co/guide/en/logstash/7.6/ls-security.html
 
+In Kibana you should create a new user to login with
+On the left go to the cog (Management)>Security section, Users> then click add new user.
+You can make this a superuser if you like. Be careful on what permissions you have. This could cause you to not be able to access certian things.
+For more info:
+https://www.elastic.co/guide/en/kibana/current/development-security-rbac.html
 
 Enjoy! If you have any contributions or to report issues please let me know!
