@@ -44,37 +44,14 @@ usr/share/kibana/bin/kibana-plugin install https://packages.wazuh.com/wazuhapp/w
 (change to:)
 // HTTPS Certificates
 config.https_key = "configuration/ssl/wazuh.key"
+
 config.https_cert = "configuration/ssl/wazuh.crt"
+
 config.https_use_ca = "no"
+
 config.https_ca = "configuration/ssl/ca.crt
 
-5:((NEED PASSWORD FROM PASSWORD.TXT FILE)))
-curl -u elastic:<password from text file> -X POST "https://es01:9200/.wazuh/_doc/1513629884013" --insecure -H 'Content-Type: application/json' -d'
-{
-  "api_user": "foo",
-  "api_password": "YmFy",
-  "url": "https://wazuh",
-  "api_port": "55000",
-  "insecure": "true",
-  "component": "API",
-  "cluster_info" : {
-    "manager" : "51476f3dc81c",
-    "cluster" : "disabled",
-    "status" : "disabled"
-  },
-  "extensions" : {
-    "audit" : true,
-    "pci" : true,
-    "gdpr" : true,
-    "oscap" : true,
-    "ciscat" : true,
-    "aws" : false,
-    "virustotal" : true,
-    "osquery" : false
-  }
-}'
-
-6:
+5:
 vi /usr/share/kibana/optimize/wazuh/config/wazuh.yml
 hosts:
   - default:
@@ -83,19 +60,19 @@ hosts:
      user: foo
      password: bar
      
-7:
+6:
 docker-compose stop
 
-8:
+7:
 Import-Certificate -FilePath "C:\mobilesiem\testing\certs\ca\ca.crt" -CertStoreLocation Cert:\LocalMachine\Root
 Import-Certificate -FilePath "C:\mobilesiem\testing\certs\es01\es01.crt" -CertStoreLocation Cert:\LocalMachine\Root
 Import-Certificate -FilePath "C:\mobilesiem\testing\certs\kib01\kib01.crt" -CertStoreLocation Cert:\LocalMachine\Root
 Import-Certificate -FilePath "C:\mobilesiem\testing\certs\wazuh\wazuh.crt" -CertStoreLocation Cert:\LocalMachine\Root
 
-9:
+8:
 Edit the docker-compose.yml file with the updated elasticsearch password in the kibana section and in the filebeat.yml file
 
-10:
+9:
 docker-compose up
 
 
