@@ -1,5 +1,4 @@
 # Portable SIEM config files
-# To be able to copy and paste correctly look at this in raw form
 Elastic docker compose files as well as files for configs
 4/11/20- Full TLS/SSL between nodes RBA (role based authentication) 
 
@@ -16,7 +15,9 @@ Open a powershell window and navigate to the folder.
 Drop the instances.yml file into the mobileSIEM folder
 run the following:
 <code class ="sh">
+ 
 "elasticsearch-certutil cert --silent --pem --in C:\MobileSIEM\instances.yml -out C:\MobileSIEM\certs.zip"
+ 
  </code>
 Then decompress
 
@@ -26,56 +27,97 @@ Also drop the docker-compose.yml and the filebeat.yml file here
 
 In powershell navigate to the directory C:\MobileSIEM\
 
-Run these commands:
+# Run these commands:
 1:
-docker-compose up -d;
+<code class ="sh">
+ 
+"docker-compose up -d;"
+
+</code>
 
 2:
-docker exec es01 /bin/bash -c "bin/elasticsearch-setup-passwords \
+
+<code class ="sh">
+ 
+"docker exec es01 /bin/bash -c "bin/elasticsearch-setup-passwords \
 auto --batch \
---url https://es01:9200" > passwords.txt;
+--url https://es01:9200" > passwords.txt;"
+
+</code>
 
 (you can copy and paste the above or run indivdualy)
 ((YOU WILL NEED THE PASSWORDS FROM THE TEXT FILE BEING OUTPUT))
 
 3:In docker desktop go to kib01 and click cli:
-usr/share/kibana/bin/kibana-plugin install https://packages.wazuh.com/wazuhapp/wazuhapp-3.12.2_7.6.2.zip
+
+<code class ="sh">
+"usr/share/kibana/bin/kibana-plugin install https://packages.wazuh.com/wazuhapp/wazuhapp-3.12.2_7.6.2.zip"
+
+</code>
 
 4:In docker desktop go to wazuh and click cli:
-/var/ossec/api/configuration/config.js
+
+
+<code class ="sh">
+"/var/ossec/api/configuration/config.js"
+ 
+ </code>
+ 
 (change to:)
-// HTTPS Certificates
+
+<code class ="sh">
+"// HTTPS Certificates
 config.https_key = "configuration/ssl/wazuh.key"
 
 config.https_cert = "configuration/ssl/wazuh.crt"
 
 config.https_use_ca = "no"
 
-config.https_ca = "configuration/ssl/ca.crt
+config.https_ca = "configuration/ssl/ca.crt"
+
+</code>
 
 5:
-vi /usr/share/kibana/optimize/wazuh/config/wazuh.yml
+
+
+<code class ="sh">
+"vi /usr/share/kibana/optimize/wazuh/config/wazuh.yml
 hosts:
   - default:
      url: http://wazuh
      port: 55000
      user: foo
-     password: bar
+     password: bar"
+ 
+ </code>
      
 6:
-docker-compose stop
+
+<code class ="sh">
+"docker-compose stop"
+
+</code>
 
 7:
-Import-Certificate -FilePath "C:\mobilesiem\testing\certs\ca\ca.crt" -CertStoreLocation Cert:\LocalMachine\Root
+
+
+<code class ="sh">
+"Import-Certificate -FilePath "C:\mobilesiem\testing\certs\ca\ca.crt" -CertStoreLocation Cert:\LocalMachine\Root
 Import-Certificate -FilePath "C:\mobilesiem\testing\certs\es01\es01.crt" -CertStoreLocation Cert:\LocalMachine\Root
 Import-Certificate -FilePath "C:\mobilesiem\testing\certs\kib01\kib01.crt" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "C:\mobilesiem\testing\certs\wazuh\wazuh.crt" -CertStoreLocation Cert:\LocalMachine\Root
+Import-Certificate -FilePath "C:\mobilesiem\testing\certs\wazuh\wazuh.crt" -CertStoreLocation Cert:\LocalMachine\Root"
+
+</code>
 
 8:
 Edit the docker-compose.yml file with the updated elasticsearch password in the kibana section and in the filebeat.yml file
 
 9:
-docker-compose up
+
+<code class ="sh">
+"docker-compose up"
+ 
+ </code>
 
 
 
