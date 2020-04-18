@@ -122,7 +122,8 @@ docker-compose up
 
 
 
-HOST VISIBILITY:
+
+# HOST VISIBILITY:
 You will need to download the beats (7.6.2) and run the following in the directory of the beats: (ex:packetbeat) and follow the instructions for set up. You will need to put in the elastic username and password like in the filebeat.yml file. 
 all hosts will be https://localhost or commented like so, protocol: https    hosts:['localhost:']
 
