@@ -15,7 +15,9 @@ Decompress the folder
 Open a powershell window and navigate to the folder. 
 Drop the instances.yml file into the mobileSIEM folder
 run the following:
-elasticsearch-certutil cert --silent --pem --in C:\MobileSIEM\instances.yml -out C:\MobileSIEM\certs.zip
+<code class ="sh">
+"elasticsearch-certutil cert --silent --pem --in C:\MobileSIEM\instances.yml -out C:\MobileSIEM\certs.zip"
+ </code>
 Then decompress
 
 
