@@ -8,7 +8,7 @@ Elastic docker compose files as well as files for configs
  Create a folder in C: called MobileSIEM
  
  Inside that folder decompress the certs:
- https://drive.google.com/file/d/1eVlAvR-RLv-jWLmbxeanxtCeiPuT9yPg/view?usp=sharing
+https://drive.google.com/file/d/1SFRfEIZmj3_3oSbAmpQEOszp_4P7sRRW/view?usp=sharing
  
 If you want your own certs download elasticsearch 7.6.2 
 Decompress the folder
