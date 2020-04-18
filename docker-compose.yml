@@ -27,11 +27,11 @@ services:
         hard: -1
     volumes:
       - data01:/usr/share/elasticsearch/data
-      - c:\mobilesiem\testing\certs\ca\ca.crt:/usr/share/elasticsearch/config/certificates/ca/ca.crt
-      - c:\mobilesiem\testing\certs\es01\es01.crt:/usr/share/elasticsearch/config/certificates/es01/es01.crt
-      - c:\mobilesiem\testing\certs\es01\es01.key:/usr/share/elasticsearch/config/certificates/es01/es01.key
-      - c:\mobilesiem\testing\certs\kib01\kib01.crt:/usr/share/elasticsearch/config/certificates/kib01/kib01.crt
-      - c:\mobilesiem\testing\certs\kib01\kib01.key:/usr/share/elasticsearch/config/certificates/kib01/kib01.key
+      - c:\mobilesiem\certs\ca\ca.crt:/usr/share/elasticsearch/config/certificates/ca/ca.crt
+      - c:\mobilesiem\certs\es01\es01.crt:/usr/share/elasticsearch/config/certificates/es01/es01.crt
+      - c:\mobilesiem\certs\es01\es01.key:/usr/share/elasticsearch/config/certificates/es01/es01.key
+      - c:\mobilesiem\certs\kib01\kib01.crt:/usr/share/elasticsearch/config/certificates/kib01/kib01.crt
+      - c:\mobilesiem\certs\kib01\kib01.key:/usr/share/elasticsearch/config/certificates/kib01/kib01.key
     ports:
       - 9200:9200
     networks:
@@ -62,11 +62,11 @@ services:
       XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: 'fhjskloppd678ehkdfdlliverpoolfcr'
       NODE_OPTIONS: "--max-old-space-size=4096"
     volumes:
-      - c:\mobilesiem\testing\certs\ca\ca.crt:/usr/share/elasticsearch/config/certificates/ca/ca.crt
-      - c:\mobilesiem\testing\certs\es01\es01.crt:/usr/share/elasticsearch/config/certificates/es01/es01.crt
-      - c:\mobilesiem\testing\certs\es01\es01.key:/usr/share/elasticsearch/config/certificates/es01/es01.key
-      - c:\mobilesiem\testing\certs\kib01\kib01.crt:/usr/share/elasticsearch/config/certificates/kib01/kib01.crt
-      - c:\mobilesiem\testing\certs\kib01\kib01.key:/usr/share/elasticsearch/config/certificates/kib01/kib01.key
+      - c:\mobilesiem\certs\ca\ca.crt:/usr/share/elasticsearch/config/certificates/ca/ca.crt
+      - c:\mobilesiem\certs\es01\es01.crt:/usr/share/elasticsearch/config/certificates/es01/es01.crt
+      - c:\mobilesiem\certs\es01\es01.key:/usr/share/elasticsearch/config/certificates/es01/es01.key
+      - c:\mobilesiem\certs\kib01\kib01.crt:/usr/share/elasticsearch/config/certificates/kib01/kib01.crt
+      - c:\mobilesiem\certs\kib01\kib01.key:/usr/share/elasticsearch/config/certificates/kib01/kib01.key
     networks:
       - elastic    
 
@@ -114,18 +114,20 @@ services:
     networks:
       - elastic
     volumes:
-      - c:\mobilesiem\testing\certs\wazuh\wazuh.crt:/etc/filebeat/certs/wazuh.crt
-      - c:\mobilesiem\testing\certs\wazuh\wazuh.key:/etc/filebeat/certs/wazuh.key
-      - c:\mobilesiem\testing\filebeat.yml:/etc/filebeat/filebeat.yml
-      - c:\mobilesiem\testing\certs\ca\ca.crt:/etc/filebeat/certs/ca/ca.crt 
-      - c:\mobilesiem\testing\certs\ca\ca.crt:/configuration/ssl/ca.crt 
-      - c:\mobilesiem\testing\certs\wazuh\wazuh.crt:/configuration/ssl/wazuh.crt
-      - c:\mobilesiem\testing\certs\wazuh\wazuh.key:/configuration/ssl/wazuh.key      
+      - c:\mobilesiem\certs\wazuh\wazuh.crt:/etc/filebeat/certs/wazuh.crt
+      - c:\mobilesiem\certs\wazuh\wazuh.key:/etc/filebeat/certs/wazuh.key
+      - c:\mobilesiem\wazuh\filebeat.yml:/etc/filebeat/filebeat.yml
+      - c:\mobilesiem\certs\ca\ca.crt:/etc/filebeat/certs/ca/ca.crt 
+      - c:\mobilesiem\certs\ca\ca.crt:/configuration/ssl/ca.crt 
+      - c:\mobilesiem\certs\wazuh\wazuh.crt:/configuration/ssl/wazuh.crt
+      - c:\mobilesiem\certs\wazuh\wazuh.key:/configuration/ssl/wazuh.key 
 
 volumes:
   data01:
     driver: local
 
 networks:
+  host:
+    driver: host 
   elastic:
     driver: bridge
