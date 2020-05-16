@@ -29,15 +29,15 @@ Also drop the docker-compose.yml and the filebeat.yml file here
 
 In powershell navigate to the directory C:\MobileSIEM\
 
-# Run these commands:
-# 1:
+# How to start:
+# 1: Start the docker containers
 <code class ="sh">
  
 docker-compose up -d;
 
 </code>
 
-# 2:
+# 2: Run the Elastic password tool
 
 <code class ="sh">
  
@@ -46,60 +46,17 @@ auto --batch \
 --url https://es01:9200" > passwords.txt;
 
 </code>
+After this completes open the docker-compose.yml file and edit line 57 to mirrior the kibana password from the txt file
 
-(you can copy and paste the above or run indivdualy)
-((YOU WILL NEED THE PASSWORDS FROM THE TEXT FILE BEING OUTPUT))
-
-# 3:In docker desktop go to kib01 and click cli:
-
+# 3:Take docker down and back up:
+In powershell
 <code class ="sh">
-usr/share/kibana/bin/kibana-plugin install https://packages.wazuh.com/wazuhapp/wazuhapp-3.12.2_7.6.2.zip
+ docker-compose down
 
 </code>
 
-# 4:In docker desktop go to wazuh and click cli:
 
-<code class ="sh">
-/var/ossec/api/configuration/config.js
- 
- </code>
- 
-(change to:)
-
-<code class ="sh">
-"// HTTPS Certificates
-config.https_key = "configuration/ssl/wazuh.key"
-
-config.https_cert = "configuration/ssl/wazuh.crt"
-
-config.https_use_ca = "no"
-
-config.https_ca = "configuration/ssl/ca.crt"
-
-</code>
-
-# 5:
-
-
-<code class ="sh">
-vi /usr/share/kibana/optimize/wazuh/config/wazuh.yml
-hosts:
-  - default:
-     url: http://wazuh
-     port: 55000
-     user: foo
-     password: bar
- 
- </code>
-     
-# 6:
-
-<code class ="sh">
-docker-compose stop
-
-</code>
-
-# 7:
+# 4 Add elastic certs into trusted stores on host machine:
 
 
 <code class ="sh">
@@ -110,10 +67,10 @@ Import-Certificate -FilePath "C:\mobilesiem\testing\certs\wazuh\wazuh.crt" -Cert
 
 </code>
 
-# 8:
+# 5:
 Edit the docker-compose.yml file with the updated elasticsearch password in the kibana section and in the filebeat.yml file
 
-# 9:
+# 6:
 
 <code class ="sh">
 docker-compose up
