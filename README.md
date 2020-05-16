@@ -48,8 +48,8 @@ auto --batch \
 </code>
 After this completes open the docker-compose.yml file and edit line 57 to mirrior the kibana password from the txt file
 
-# 3:Take docker down and back up:
-In powershell
+# 3:Take docker down:
+In the powershell window you have open
 <code class ="sh">
  docker-compose down
 
@@ -70,7 +70,7 @@ Import-Certificate -FilePath "C:\mobilesiem\testing\certs\wazuh\wazuh.crt" -Cert
 # 5:
 Edit the docker-compose.yml file with the updated elasticsearch password in the kibana section and in the filebeat.yml file
 
-# 6:
+# 6 Bring the containers back up:
 
 <code class ="sh">
 docker-compose up
