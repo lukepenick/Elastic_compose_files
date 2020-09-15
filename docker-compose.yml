@@ -2,7 +2,7 @@ version: '2.2'
 
 services:
   es01:
-    image: lukepen/elasticsearch7.6.2:1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
     container_name: es01
     environment:
       - node.name=es01
@@ -44,7 +44,7 @@ services:
       retries: 5
 
   kib01:
-    image: lukepen/kibana7.6.2:1
+    image: docker.elastic.co/kibana/kibana:7.8.0
     container_name: kib01
     depends_on: {"es01": {"condition": "service_healthy"}}
     ports:
@@ -103,7 +103,7 @@ services:
 #      - elastic
 #
   wazuh:
-    image: lukepen/wazuh3.11:1
+    image: wazuh/wazuh:3.13.1_7.8.0
     container_name: wazuh
     restart: always     
     ports:
