@@ -1,40 +1,42 @@
 # Portable SIEM config files
-Elastic docker compose files as well as files for configs
-4/11/20- Full TLS/SSL between nodes RBA (role based authentication) 
+Elastic docker compose files
+4/11/20- Full TLS/SSL between nodes RBA (role based authentication)
+6/16/21- Removed a bunch of stuff. Elastic enpoint now available. Upgraded versiona
 
- Download docker desktop for windows, packetbeat, winlogbeat, and the wazuh agent
+ Download docker desktop and docker compose for windows or linux 
+
+
+# How to start:
+ Create a folder in C: called SIEM (in linux /SIEM)
  
- Create a folder in C: called MobileSIEM
- 
- Inside that folder decompress the certs:
-https://drive.google.com/file/d/1SFRfEIZmj3_3oSbAmpQEOszp_4P7sRRW/view?usp=sharing
- 
-If you want your own certs download elasticsearch 7.6.2 
-Decompress the folder
-Open a powershell window and navigate to the folder. 
-Drop the instances.yml file into the mobileSIEM folder
+
+Open a powershell window (or bash) and navigate to the folder you created above. 
+Drop the instances.yml, .env, docker-compose.yml, and create-certs.yml file into the SIEM folder
 
 run the following:
 
 <code class ="sh">
  
-elasticsearch-certutil cert --silent --pem --in C:\MobileSIEM\instances.yml -out C:\MobileSIEM\certs.zip
+
+
+docker-compose -f create-certs.yml run --rm create_certs
+
  
  </code>
-Then decompress
 
 
+# 1: Start the docker containers or use the scripts in linux
 
-Also drop the docker-compose.yml and the filebeat.yml file here
-
-In powershell navigate to the directory C:\MobileSIEM\
-
-# How to start:
-# 1: Start the docker containers
+Drop the scripts into somewhere your path shows or add a directory to your path
+(Will have a powershell script soon)
+(Make sure the scripts have execute permissions
 <code class ="sh">
- 
-docker-compose up -d;
+elastic-startup 
+</code>
 
+If not using the script:
+<code class ="sh">
+docker-compose up -d
 </code>
 
 # 2: Run the Elastic password tool
@@ -46,62 +48,28 @@ auto --batch \
 --url https://es01:9200" > passwords.txt;
 
 </code>
-After this completes open the docker-compose.yml file and edit line 57 to mirrior the kibana password from the txt file
 
 # 3:Take docker down:
-In the powershell window you have open
+
 <code class ="sh">
  docker-compose down
 
 </code>
 
+# 4:Change your kibana password:
 
-# 4 Add elastic certs into trusted stores on host machine:
+After this completes open the docker-compose.yml file and edit the "kibana_system" password to mirrior the password from the txt file
 
+# 5:Bring the containers back up:
 
 <code class ="sh">
-Import-Certificate -FilePath "C:\mobilesiem\testing\certs\ca\ca.crt" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "C:\mobilesiem\testing\certs\es01\es01.crt" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "C:\mobilesiem\testing\certs\kib01\kib01.crt" -CertStoreLocation Cert:\LocalMachine\Root
-Import-Certificate -FilePath "C:\mobilesiem\testing\certs\wazuh\wazuh.crt" -CertStoreLocation Cert:\LocalMachine\Root
-
+docker-compose up -d
 </code>
 
-# 5:
-Edit the docker-compose.yml file with the updated elasticsearch password in the kibana section and in the filebeat.yml file
-
-# 6 Bring the containers back up:
-
-<code class ="sh">
-docker-compose up
+Now you should be able to go to https://localhost:5601 or https://<IP of device>:5601
  
- </code>
+The username is elastic and the password is in the passwords.txt file.
 
 
-
-
-# HOST VISIBILITY:
-You will need to download the beats (7.6.2) and run the following in the directory of the beats: (ex:packetbeat) and follow the instructions for set up. You will need to put in the elastic username and password like in the filebeat.yml file. 
-all hosts will be https://localhost or commented like so, protocol: https    hosts:['localhost:']
-
-In the Wazuh app in Kibana go to agents and click deploy agents.
-
-Change the server address to localhost and run the powershell script with admin privileges.
-
-Start the Wazuh.msi 
-
-
-
-OTHERNOTES:
-Only use logstash is the event elastic doesnt support logs from whatever you are trying to get, it will cause you not to get IPs and whatnot of hosts you are sending through it.
-
-If you want logstash to run please visit and follow the steps to add it:
-https://www.elastic.co/guide/en/logstash/7.6/ls-security.html
-
-In Kibana you should create a new user to login with
-On the left go to the cog (Management)>Security section, Users> then click add new user.
-You can make this a superuser if you like. Be careful on what permissions you have. This could cause you to not be able to access certian things.
-For more info:
-https://www.elastic.co/guide/en/kibana/current/development-security-rbac.html
 
 Enjoy! If you have any contributions or to report issues please let me know!
