@@ -1,7 +1,6 @@
 # Portable SIEM config files
 Elastic docker compose files
-4/11/20- Full TLS/SSL between nodes RBA (role based authentication)
-6/16/21- Removed a bunch of stuff. Elastic enpoint now available. Upgraded versiona
+
 
  Download docker desktop and docker compose for windows or linux 
 
