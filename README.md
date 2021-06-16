@@ -6,12 +6,13 @@ Elastic docker compose files
 
 
 # How to start:
- Create a folder in C: called SIEM (in linux /SIEM)
+ Create a folder in C: called SIEM (in linux /SIEM) or pull the entire directory from this page.
  
 
 Open a powershell window (or bash) and navigate to the folder you created above. 
 Drop the instances.yml, .env, docker-compose.yml, and create-certs.yml file into the SIEM folder
 
+# RENAME THE ENV FILE TO .env!!!
 run the following:
 
 <code class ="sh">
