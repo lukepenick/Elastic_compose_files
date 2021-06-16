@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -rf certs/
+rm passwords.txt
+docker-compose down -v
