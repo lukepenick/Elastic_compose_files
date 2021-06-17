@@ -5,21 +5,27 @@ dir=`pwd`
 stop=1
 
 cd /SIEM
-echo "######## CREATING CERTS ########\n"
+echo "################################"
+echo "#        CREATING CERTS        #"
+echo "################################"
 
 docker-compose -f create-certs.yml run --rm create_certs
+
 if [ $? = 0 ]
 then
 docker-compose down
 fi
+
 if [ $? = 0 ]
 then
 docker-compose up -d
 fi
 
-echo "######## Generating passwords.txt file ########"
-echo "##### the new kibana password will be under kibana_system #####"
-echo "###### THIS WILL TAKE A FEW. PLEASE BE PATIENT!! ######"
+echo "###############################################################"
+echo "#              Generating passwords.txt file                  #"
+echo "#     the new kibana password will be under kibana_system     #"
+echo "#      THIS WILL TAKE A FEW. PLEASE BE PATIENT!!              #"
+echo "###############################################################"
 
 sleep 120
 
@@ -30,13 +36,17 @@ if [ $? = 0 ]
 then
   while [ $stop = 1 ]
   do
-    echo "Please Change the password in the kibana portion of the docker-compose.yml file.\n"
-    echo " The ELASTICSEARCH_PASSWORD will now be the kibana_system password (also in password file).\n"
+    echo "#############################################################################################"
+    echo "#                                                                                           #"
+    echo "# Please Change the password in the kibana portion of the docker-compose.yml file.          #"
+    echo "# The ELASTICSEARCH_PASSWORD will now be the kibana_system password (also in password file).#"
+    echo "#                                                                                           #"
+    echo "#############################################################################################"
     read -p "Ready to continue? [Y/N]: " option
                 if [ $option = Y ]
         then
                         stop=`expr $stop + 1`
-        elif [$option = N ]
+        elif [ $option = N ]
           then
             echo "Okay. I'll wait..."
                 else
@@ -48,7 +58,7 @@ fi
 docker-compose stop
 if [ $? = 0 ]
 then
-echo "This could take a few...\n"
+echo "This could take a few..."
 fi
 
 docker-compose up -d
@@ -56,8 +66,12 @@ if [ $? = 0 ]
 then
 sleep 60
 
-echo "Services have started but may not be ready to use. Thank you!"
-echo "Go to https://<IP of this device>:5601"
-echo "login with the elastic user and password"
+echo "#################################################################"
+echo "# Services have started but may not be ready to use. Thank you! #"
+echo "#            Go to https://<IP of this device>:5601             #"
+echo "#           login with the elastic user and password            #"
+echo "#################################################################"
+
 fi
+
 cd $dir
