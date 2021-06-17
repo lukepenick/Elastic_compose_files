@@ -57,9 +57,11 @@ services:
       - /SIEM/certs:/usr/share/elasticsearch/config/certificates
     networks:
       - elastic
+
 volumes:
   data01:
     driver: local
+
 networks:
   elastic:
     driver: bridge
